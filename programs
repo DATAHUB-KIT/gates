@@ -1,3 +1,6 @@
 
 https://www.scribbr.com/text-summarizer/
 https://www.scribbr.com/humanize-ai/
+################################################
+%pip install -U -q "google-generativeai>=0.7.2"
+#########################################################
