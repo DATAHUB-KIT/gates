@@ -26,3 +26,9 @@ Review:
 Answer only with the sentiment
 """
 ####################################################################
+prompt = f"""
+Summarize the following article:
+
+{article}
+"""
+###########################################################3
