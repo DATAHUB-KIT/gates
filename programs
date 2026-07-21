@@ -16,3 +16,13 @@ response = client.chat.completions.create(
 
 print(response.choices[0].message.content)
 #####################################################3
+zero_prompt = """
+Classify the sentiment of the following review as
+Positive, Negative, or Neutral.
+
+Review:
+"The laptop performance is excellent but the battery drains quickly."
+
+Answer only with the sentiment
+"""
+####################################################################
