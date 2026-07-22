@@ -1,109 +1,14 @@
- !pip install -q groq
-######################################################3
-from groq import Groq
-from google.colab import userdata
-
-client = Groq(
-    api_key=userdata.get("grok2")
-)
-#################################################3
-response = client.chat.completions.create(
-    model="llama-3.3-70b-versatile",
-    messages=[
-        {"role": "user", "content": "Hi"}
-    ]
-)
-
-print(response.choices[0].message.content)
-#####################################################3
-zero_prompt = """
-Classify the sentiment of the following review as
-Positive, Negative, or Neutral.
-
-Review:
-"The laptop performance is excellent but the battery drains quickly."
-
-Answer only with the sentiment
-"""
-####################################################################
-prompt = f"""
-Summarize the following article:
-
-{article}
-"""
-###########################################################3
-model_name = "nlptown/bert-base-multilingual-uncased-sentiment"
-##################################################################3
-from transformers import AutoTokenizer,AutoModelForSequenceClassification
-
-model = AutoModelForSequenceClassification.from_pretrained(model_name)
-tokenizer = AutoTokenizer.from_pretrained(model_name)
-########################################################################
-!pip install diffusers
-#######################################################3
-from diffusers import DiffusionPipeline
-import torch
-######################################################################
-pipe=DiffusionPipeline.from_pretrained ("stabilityai/stable-diffusion-xl-base-1.0",  torch_dtype=torch.float16,  use_safetensors=True,  variant="fp16")
-pipe.to("cuda")
-###################################################################
-prompt="monkey with banana"
-#################################################################3
-images=pipe(prompt=prompt,
-            num_inference_steps=100,
-            guidance_scale=9).images[0]
-images
-####################################################################33
-create an an image
- A futuristic classroom where an AI humanoid robot teaches Python programming to engineering students. 
-The classroom has - Blue ambient lighting - Interactive holographic displays - Large digital screens
-- Students working on laptops - Modern smart classroom - Ultra realistic
-########################################################################################################
-analysis_prompt = """
-Describe this image in detail.
-
-Mention
-
-- Main objects
-- People
-- Activities
-- Environment
-- Colors
-- Technology
-"""
-#################################################################################################3
-
-evaluation_prompt = f"""
-You are an AI evaluator.
-
-Compare the ORIGINAL PROMPT with the GENERATED IMAGE DESCRIPTION.
-
-Original Prompt
-
-{original_prompt}
-
-Generated Caption
-
-{caption}
-
-Evaluate
-
-1. Accuracy (1-5)
-
-2. Relevance (1-5)
-
-3. Completeness (1-5)
-
-4. Missing Objects
-
-5. Alignment Percentage
-
-Return your answer as a table.
-"""
-judge = client.models.generate_content(
-    model="gemini-3.5-flash",
-    contents=evaluation_prompt
-)
-
-print(judge.text)
-
+!pip install -U langchain
+!pip install -U langchain-community
+!pip install -U langchain-core
+!pip install -U langchain-text-splitters
+!pip install -U langchain-huggingface
+!pip install -U sentence-transformers
+!pip install -U faiss-cpu
+!pip install -U python-dotenv
+#######################################
+from langchain_core.documents import Document
+from langchain_text_splitters import RecursiveCharacterTextSplitter
+from langchain_huggingface import HuggingFaceEmbeddings
+from langchain_community.vectorstores import FAISS
+##########################################################
