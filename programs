@@ -74,3 +74,46 @@ Answer:
 
 """)
 ###############################################################################
+vectorstore = FAISS.from_documents(
+    chunks,
+    embedding_model
+)
+
+print("FAISS Index Created")
+#################################################################3333
+retriever = vectorstore.as_retriever(
+    search_kwargs={"k":2}
+)
+################################################################33
+llm = ChatGoogleGenerativeAI(
+    model="gemini-3.5-flash",
+    temperature=0
+)
+########################################################################
+query = "What is Machine Learning?"
+
+#########################################################################3
+
+retrieved_docs = retriever.invoke(query)
+
+context = "\n\n".join(
+    doc.page_content
+    for doc in retrieved_docs
+)
+
+print("\nRetrieved Context\n")
+print(context)
+##############################################################################3
+final_prompt = prompt.invoke(
+    {
+        "context":context,
+        "question":query
+    }
+)
+
+#####################################################################3
+
+response = llm.invoke(final_prompt)
+
+print("\nRAG Answer\n")
+print(response.content)
