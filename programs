@@ -58,6 +58,8 @@ for i, doc in enumerate(results, 1):
     print(doc.page_content)
     print("-" * 50)
 ############################################
+!pip install langchain_google_genai
+########################################################
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_google_genai import ChatGoogleGenerativeAI
 prompt = ChatPromptTemplate.from_template("""
