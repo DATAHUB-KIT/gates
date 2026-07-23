@@ -15,6 +15,56 @@ import numpy as np
 from sentence_transformers import SentenceTransformer
 #########################################################3
 
+memory=[]
+################################################
+template="""
+You are an intelligent AI Agent.
+
+Conversation History:
+{history}
+
+Retrieved Knowledge:
+{context}
+
+Tool Output:
+{tool}
+
+Current Question:
+{question}
+
+Answer:
+"""
+###################################################################
+def calculator(expression):
+
+    try:
+        return eval(expression)
+
+    except:
+        return None
+#######################################################################
+documents=[
+
+"Artificial Intelligence is the simulation of human intelligence.",
+
+"Machine Learning is a subset of Artificial Intelligence.",
+
+"Deep Learning uses Neural Networks.",
+
+"Python is widely used for AI development."
+
+]
+###########################################################################
+model=SentenceTransformer("all-MiniLM-L6-v2")
+
+embeddings=model.encode(documents)
+#######################################################################
+dimension=embeddings.shape[1]
+
+index=faiss.IndexFlatL2(dimension)
+
+index.add(np.array(embeddings))
+######################################################################
 
 
 
