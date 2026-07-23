@@ -66,5 +66,12 @@ index=faiss.IndexFlatL2(dimension)
 index.add(np.array(embeddings))
 ######################################################################
 
+def retrieve(query):
 
+    q=model.encode([query])
+
+    D,I=index.search(np.array(q),1)
+
+    return documents[I[0][0]]
+########################################################################################
 
