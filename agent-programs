@@ -74,4 +74,73 @@ def retrieve(query):
 
     return documents[I[0][0]]
 ########################################################################################
+while True:
 
+    question=input("You : ")
+
+    if question.lower()=="exit":
+        break
+
+    ##################################################
+    # Memory
+    ##################################################
+
+    history="\n".join(memory)
+
+    ##################################################
+    # Tool Decision
+    ##################################################
+
+    tool_output=""
+
+    if any(op in question for op in ["+","-","*","/"]):
+
+        tool_output=str(calculator(question))
+
+    ##################################################
+    # RAG Retrieval
+    ##################################################
+
+    context=retrieve(question)
+
+    ##################################################
+    # Prompt
+    ##################################################
+
+    prompt=template.format(
+
+        history=history,
+
+        context=context,
+
+        tool=tool_output,
+
+        question=question
+
+    )
+
+    ##################################################
+    # Gemini
+    ##################################################
+
+    response=client.models.generate_content(
+
+        model="gemini-flash-latest",
+
+        contents=prompt
+
+    )
+
+    answer=response.text
+
+    print("\nAgent :",answer)
+
+    print("-"*80)
+
+    ##################################################
+    # Save Memory
+    ##################################################
+
+    memory.append("User : "+question)
+
+    memory.append("Assistant : "+answer)
