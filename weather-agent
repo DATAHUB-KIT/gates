@@ -1,0 +1,13 @@
+Summarize the following weather information in a friendly paragraph.
+
+City: {{$json.name}}
+
+Temperature: {{$json.main.temp}} °C
+
+Humidity: {{$json.main.humidity}}%
+
+Weather: {{$json.weather[0].description}}
+
+Wind Speed: {{$json.wind.speed}} m/s
+
+Suggest suitable clothing and whether an umbrella is needed.
